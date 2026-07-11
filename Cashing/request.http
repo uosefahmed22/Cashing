@@ -1,10 +1,13 @@
 @baseUrl = https://localhost:7291
 
 ### 
-GET {{baseUrl}}/api/Product/without-caching
+GET {{baseUrl}}/api/In_Memory_Product/without-caching
+
+### 
+GET {{baseUrl}}/api/Distributed_Product
 
 ####
-GET {{baseUrl}}/api/Product/with-caching-old-way
+GET {{baseUrl}}/api/In_Memory_Product/with-caching-old-way
 
 ###
-GET {{baseUrl}}/api/Product/with-caching-new-way
+GET {{baseUrl}}/api/In_Memory_Product/with-caching-new-way

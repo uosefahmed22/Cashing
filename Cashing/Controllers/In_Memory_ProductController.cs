@@ -1,17 +1,17 @@
 ﻿using Cashing.Data;
-using Cashing.Services;
+using Cashing.In_Memory_Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cashing.Controllers
-{
+{   
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductController : ControllerBase
+    public class In_Memory_ProductController : ControllerBase
     {
         private readonly IProductService _productService;
 
-        public ProductController(IProductService productService)
+        public In_Memory_ProductController(IProductService productService)
         {
             _productService = productService;
         }

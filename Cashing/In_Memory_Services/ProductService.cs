@@ -4,7 +4,7 @@ using Cashing.Dto;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace Cashing.Services
+namespace Cashing.In_Memory_Services
 {
     public class ProductService(CashingDb cashingDb, IMemoryCache cache, IMapper mapper) : IProductService
     {
@@ -15,7 +15,6 @@ namespace Cashing.Services
             return productResponses;
 
         }
-        #region InMemory_Cach
         public async Task<IEnumerable<ProductResponse>> GetProductsUsingCacheAsync_OldWay()
         {
             var cacheKey = "products";
@@ -44,12 +43,6 @@ namespace Cashing.Services
             return Task.FromResult(productResponses);
         }
 
-        #endregion
-
-        #region Distributed_Cach
-
-
-        #endregion
     }
 }
 

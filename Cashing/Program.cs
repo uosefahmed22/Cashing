@@ -1,6 +1,7 @@
 using Cashing.Data;
+using Cashing.Distributed_Services;
 using Cashing.Helpers;
-using Cashing.Services;
+using Cashing.In_Memory_Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,8 +17,17 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<CashingDb>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddMemoryCache();
-builder.Services.AddScoped<IProductService, ProductService>();
+
+builder.Services.AddScoped<Cashing.In_Memory_Services.IProductService, Cashing.In_Memory_Services.ProductService>();
+builder.Services.AddScoped<Cashing.Distributed_Services.IProductService, Cashing.Distributed_Services.ProductService>();
+
 builder.Services.AddMemoryCache();
+
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration.GetConnectionString("RedisConnection");
+    options.InstanceName = "DSRedis";
+});
 
 
 builder.Services.AddAutoMapper(cf => cf.AddProfile<MappingProfile>(), AppDomain.CurrentDomain.GetAssemblies());

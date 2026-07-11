@@ -1,6 +1,6 @@
 using Cashing.Dto;
 
-namespace Cashing.Services
+namespace Cashing.In_Memory_Services
 {
     public interface IProductService
     {

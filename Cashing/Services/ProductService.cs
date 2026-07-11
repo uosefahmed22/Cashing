@@ -15,7 +15,7 @@ namespace Cashing.Services
             return productResponses;
 
         }
-
+        #region InMemory_Cach
         public async Task<IEnumerable<ProductResponse>> GetProductsUsingCacheAsync_OldWay()
         {
             var cacheKey = "products";
@@ -43,6 +43,13 @@ namespace Cashing.Services
             });
             return Task.FromResult(productResponses);
         }
+
+        #endregion
+
+        #region Distributed_Cach
+
+
+        #endregion
     }
 }
 

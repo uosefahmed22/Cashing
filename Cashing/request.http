@@ -1,0 +1,10 @@
+@baseUrl = https://localhost:7291
+
+### 
+GET {{baseUrl}}/api/Product/without-caching
+
+####
+GET {{baseUrl}}/api/Product/with-caching-old-way
+
+###
+GET {{baseUrl}}/api/Product/with-caching-new-way

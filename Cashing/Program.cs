@@ -1,8 +1,10 @@
 using Cashing.Data;
 using Cashing.Distributed_Services;
 using Cashing.Helpers;
+using Cashing.Hybrid_services;
 using Cashing.In_Memory_Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Hybrid;
 using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +22,7 @@ builder.Services.AddMemoryCache();
 
 builder.Services.AddScoped<Cashing.In_Memory_Services.IProductService, Cashing.In_Memory_Services.ProductService>();
 builder.Services.AddScoped<Cashing.Distributed_Services.IProductService, Cashing.Distributed_Services.ProductService>();
+builder.Services.AddScoped<Cashing.Hybrid_services.IProductService, Cashing.Hybrid_services.ProductService>();
 
 builder.Services.AddMemoryCache();
 
@@ -29,6 +32,21 @@ builder.Services.AddStackExchangeRedisCache(options =>
     options.InstanceName = "DSRedis";
 });
 
+builder.Services.AddDistributedSqlServerCache(options =>
+{
+    options.ConnectionString = builder.Configuration.GetConnectionString("SqlCache");
+    options.SchemaName = "dbo";
+    options.TableName = "CacheEntries";
+});
+
+builder.Services.AddHybridCache(options =>
+{
+   options.DefaultEntryOptions = new HybridCacheEntryOptions
+   {
+       Expiration = TimeSpan.FromMinutes(5),
+       LocalCacheExpiration = TimeSpan.FromMinutes(5)
+   };
+});
 
 builder.Services.AddAutoMapper(cf => cf.AddProfile<MappingProfile>(), AppDomain.CurrentDomain.GetAssemblies());
 

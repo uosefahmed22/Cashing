@@ -7,14 +7,8 @@ namespace Cashing.Controllers
 {   
     [Route("api/[controller]")]
     [ApiController]
-    public class In_Memory_ProductController : ControllerBase
+    public class In_Memory_ProductController(IProductService _productService) : ControllerBase
     {
-        private readonly IProductService _productService;
-
-        public In_Memory_ProductController(IProductService productService)
-        {
-            _productService = productService;
-        }
         //without caching
         [HttpGet("without-caching")]
         public async Task<IActionResult> GetProductsWithoutCaching()

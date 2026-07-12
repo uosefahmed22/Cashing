@@ -23,8 +23,10 @@ builder.Services.AddMemoryCache();
 builder.Services.AddScoped<Cashing.In_Memory_Services.IProductService, Cashing.In_Memory_Services.ProductService>();
 builder.Services.AddScoped<Cashing.Distributed_Services.IProductService, Cashing.Distributed_Services.ProductService>();
 builder.Services.AddScoped<Cashing.Hybrid_services.IProductService, Cashing.Hybrid_services.ProductService>();
+builder.Services.AddScoped<Cashing.OutputResonseCashService.IProductService, Cashing.OutputResonseCashService.ProductService>();
 
 builder.Services.AddMemoryCache();
+builder.Services.AddOutputCache();
 
 builder.Services.AddStackExchangeRedisCache(options =>
 {
@@ -66,6 +68,8 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+
+app.UseOutputCache();
 
 using (var scope = app.Services.CreateScope())
 {

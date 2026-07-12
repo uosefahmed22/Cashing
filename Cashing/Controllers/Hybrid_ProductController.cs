@@ -6,19 +6,12 @@ namespace Cashing.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class Hybrid_ProductController : ControllerBase
+    public class Hybrid_ProductController(IProductService productService) : ControllerBase
     {
-        private readonly IProductService _productService;
-
-        public Hybrid_ProductController(IProductService productService)
-        {
-            _productService = productService;
-        }
-
         [HttpGet()]
         public IActionResult Get()
         {   
-            var products = _productService.GetProductsAsync().Result;
+            var products = productService.GetProductsAsync().Result;
             return Ok(products);
         }
     }
